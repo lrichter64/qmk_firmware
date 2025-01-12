@@ -612,9 +612,9 @@ __attribute__((weak)) void os_state_indicate(void) {
 #    if defined(NUM_LOCK_INDEX)
     if (host_keyboard_led_state().num_lock) {
 #        if defined(DIM_NUM_LOCK)
-        SET_LED_ON(NUM_LOCK_INDEX);
-#        else
         SET_LED_OFF(NUM_LOCK_INDEX);
+#        else
+        SET_LED_ON(NUM_LOCK_INDEX);
 #        endif
     }
 #    endif
