@@ -16,7 +16,11 @@
 
 #pragma once
 
+// Changes
+// Add layers
 #define DYNAMIC_KEYMAP_LAYER_COUNT 5
+// reduce count to toggle layer (default: 5)
+#define TAPPING_TOGGLE 2
 
 #ifdef RGB_MATRIX_ENABLE
 /* RGB Matrix driver configuration */
