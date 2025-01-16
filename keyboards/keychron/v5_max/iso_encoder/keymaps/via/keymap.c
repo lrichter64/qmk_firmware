@@ -17,6 +17,26 @@
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 
+// Tap dance declarations
+enum {
+    TD_PDOT,
+    TD_RCTL_DEL,
+    TD_LALT_FN,
+    TD_RESET,
+};
+
+// Tap Dance definitions
+tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Dot, twice for Pdot (comma)
+    [TD_PDOT] = ACTION_TAP_DANCE_DOUBLE(KC_DOT, KC_PDOT),
+    // Tap once for RCTL, twice for Delete
+    [TD_RCTL_DEL] = ACTION_TAP_DANCE_DOUBLE(KC_RCTL, KC_DEL),
+    // Tap once for LALT, twice for FN
+    [TD_LALT_FN] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, MO(WIN_FN))
+    // Tap twice for Bootloader
+    [TD_RESET] = ACTION_TAP_DANCE_DOUBLE(KC_NO, QM_BOOT)
+};
+
 enum layers {
     MAC_BASE,
     MAC_FN,
@@ -48,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,    KC_RBRC,                      KC_P7,    KC_P8,    KC_P9,      KC_PPLS,
         KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,    KC_NUHS,  KC_ENT,             KC_P4,    KC_P5,    KC_P6,
         KC_LSFT,  KC_NUBS,  KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,              KC_RSFT,  KC_UP,    KC_P1,    KC_P2,    KC_P3,      KC_PENT,
-        KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  MO(WIN_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,    KC_DOT             ),
+        KC_LCTL,  KC_LWIN,  TD(TD_LALT_FN),                                KC_SPC,                                 KC_RALT,  MO(WIN_FN), TD(TD_RCTL_DEL),  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,    TD(TD_PDOT)             ),
 
     [WIN_FN] = LAYOUT_iso_99(
         _______,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FILE,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,    KC_VOLD,  KC_VOLU,            _______,  _______,  _______,    KC_MUTE,
@@ -59,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MO(WIN_BOOT),  GU_TOGG,  _______,                                _______,                                KC_APP ,  _______,    KC_DEL ,  KC_HOME,  KC_PGDN,  KC_END ,  _______,  KC_PDOT            ),
 
     [WIN_BOOT] = LAYOUT_iso_99(
-        _______,            _______,  _______,  _______,  QK_BOOT,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,            _______,  _______,  _______,    _______,
+        _______,            _______,  _______,  _______,  TD(TD_RESET),  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,            _______,  _______,  _______,    _______,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,            _______,  _______,  _______,    _______,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,                      _______,  _______,  _______,    _______,
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,            _______,  _______,  _______,
