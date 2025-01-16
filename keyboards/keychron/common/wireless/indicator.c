@@ -610,7 +610,7 @@ __attribute__((weak)) void os_state_indicate(void) {
 #    endif
 
 #    if defined(NUM_LOCK_INDEX)
-    if (host_keyboard_led_state().num_lock) {
+    if (!host_keyboard_led_state().num_lock) {
 #        if defined(DIM_NUM_LOCK)
         SET_LED_OFF(NUM_LOCK_INDEX);
 #        else
@@ -745,7 +745,7 @@ void LED_NONE_INDICATORS_KB(void) {
 #    if defined(LED_MATRIX_DRIVER_SHUTDOWN_ENABLE) || defined(RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE)
 bool LED_DRIVER_ALLOW_SHUTDOWN(void) {
 #        if defined(NUM_LOCK_INDEX)
-    if (host_keyboard_led_state().num_lock) return false;
+    if (!host_keyboard_led_state().num_lock) return false;
 #        endif
 #        if defined(CAPS_LOCK_INDEX) && !defined(DIM_CAPS_LOCK)
     if (host_keyboard_led_state().caps_lock) return false;
